@@ -1,0 +1,60 @@
+---
+title: "ggplots"
+author: "Moeen Farasat"
+date: "11/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r importing dataset}
+library(ggplot2)
+library(ggpubr)
+```
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+Reference: http://www.sthda.com/english/articles/32-r-graphics-essentials/126-combine-multiple-ggplots-in-one-graph/
+
+```{r , echo=FALSE}
+# Density plot of "Sepal.Length"
+#::::::::::::::::::::::::::::::::::::::
+density.p <- ggdensity(iris, x = "Sepal.Length", 
+                       fill = "Species", palette = "jco")
+# Draw the summary table of Sepal.Length
+#::::::::::::::::::::::::::::::::::::::
+# Compute descriptive statistics by groups
+stable <- desc_statby(iris, measure.var = "Sepal.Length",
+                      grps = "Species")
+stable <- stable[, c("Species", "length", "mean", "sd")]
+# Summary table plot, medium orange theme
+stable.p <- ggtexttable(stable, rows = NULL, 
+                        theme = ttheme("mOrange"))
+# Draw text
+#::::::::::::::::::::::::::::::::::::::
+text <- paste("iris data set gives the measurements in cm",
+              "of the variables sepal length and width",
+              "and petal length and width, respectively,",
+              "for 50 flowers from each of 3 species of iris.",
+             "The species are Iris setosa, versicolor, and virginica.",
+             sep = " ")
+text.p <- ggparagraph(text = text, face = "italic", size = 11, color = "black")
+# Arrange the plots on the same page
+ggarrange(density.p, stable.p, text.p, 
+          ncol = 1, nrow = 3,
+          heights = c(1, 0.5, 0.3))
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
