@@ -19,6 +19,34 @@ When you click the **Knit** button a document will be generated that includes bo
 library(ggplot2)
 library(ggpubr)
 ```
+```{r}
+# create canvas
+ggplot(mpg)
+
+# variables of interest mapped
+ggplot(mpg, aes(x = displ, y = hwy))
+
+# data plotted
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point()
+
+# Left column: x and y mapping needed!
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point()
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_smooth()
+
+# Right column: no y mapping needed!
+ggplot(data = mpg, aes(x = class)) +
+  geom_bar()  
+
+ggplot(data = mpg, aes(x = hwy)) +
+  geom_histogram() 
+```
 
 
 
